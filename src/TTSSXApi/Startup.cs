@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using TTSSXApi.Models.Db;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+
+namespace TTSSXApi
+{
+    public class Startup
+    {
+        ILogger log;
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+
+        public IConfigurationRoot Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            // Add framework services.
+            services.AddMvc();
+
+            //var connectionString = Configuration["DbContextSettings:ConnectionString"];
+            services.AddDbContext<TtssxContext>(
+                opts => opts.UseNpgsql("User ID = ttssx_user; Password = tt55x; Host = vps.dszymanski.pl; Port = 5432; Database = ttssx; Pooling = true;")
+            );
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            log = loggerFactory.CreateLogger("error");
+
+            try
+            {
+                app.UseMvc();
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    app.UseExceptionHandler(
+                    builder =>
+                    {
+                        builder.Run(
+                          async context =>
+                          {
+                              context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                              context.Response.ContentType = "text/html";
+
+                              var error = context.Features.Get<IExceptionHandlerFeature>();
+                              if (error != null)
+                              {
+                                  await context.Response.WriteAsync($"<h1>Error: {error.Error.Message}</h1>{error.Error.StackTrace}").ConfigureAwait(false);
+                              }
+                          });
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                log.LogError(ex.Message);
+                app.Run(
+                  async context =>
+                  {
+                      context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                      context.Response.ContentType = "text/plain";
+                      await context.Response.WriteAsync(ex.Message).ConfigureAwait(false);
+                      await context.Response.WriteAsync(ex.StackTrace).ConfigureAwait(false);
+                  });
+            }
+        }
+    }
+}
