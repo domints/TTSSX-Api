@@ -19,6 +19,8 @@ namespace TTSSXApi.Models.Db
         public int DepoId { get; set; }
         [Column("trattyid")]
         public int TramTypeId { get; set; }
+        [Column("traextrainfo")]
+        public string ExtraInfo { get; set; }
 
 
         public virtual Depo Depo { get; set; }

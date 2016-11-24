@@ -8,9 +8,10 @@ using TTSSXApi.Models.Db;
 namespace TTSSXApi.Migrations
 {
     [DbContext(typeof(TtssxContext))]
-    partial class TtssxContextModelSnapshot : ModelSnapshot
+    [Migration("20161124183729_Add-ExtraInfo-Column-Tram")]
+    partial class AddExtraInfoColumnTram
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

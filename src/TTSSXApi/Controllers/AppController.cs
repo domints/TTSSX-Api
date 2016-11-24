@@ -68,7 +68,8 @@ namespace TTSSXApi.Controllers
                             TramId = id,
                             TramNo = tr.SideNo,
                             Name = tr.TramType.Name,
-                            LowFloor = tr.TramType.LowFloor
+                            LowFloor = tr.TramType.LowFloor,
+                            ExtraInfo = tr.ExtraInfo
                         });
                     }
                 }

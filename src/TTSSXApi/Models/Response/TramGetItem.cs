@@ -17,5 +17,7 @@ namespace TTSSXApi.Models.Response
         public string Name { get; set; }
         [DataMember(Name = "lowfloor")]
         public LowFloor LowFloor { get; set; }
+        [DataMember(Name = "extrainfo")]
+        public string ExtraInfo { get; set; }
     }
 }
