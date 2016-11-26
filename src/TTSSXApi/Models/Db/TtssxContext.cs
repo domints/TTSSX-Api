@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TTSSXApi.Models.Db
 {
@@ -16,5 +12,7 @@ namespace TTSSXApi.Models.Db
         public virtual DbSet<Depo> Depos { get; set; }
         public virtual DbSet<TramType> TramTypes { get; set; }
         public virtual DbSet<Tram> Trams { get; set; }
+        public virtual DbSet<Fetch> Fetches { get; set; }
+        public virtual DbSet<FetchPassage> FetchPassages { get; set; }
     }
 }

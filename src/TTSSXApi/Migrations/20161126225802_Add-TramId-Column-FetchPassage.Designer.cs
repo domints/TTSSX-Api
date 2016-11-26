@@ -8,9 +8,10 @@ using TTSSXApi.Models.Db;
 namespace TTSSXApi.Migrations
 {
     [DbContext(typeof(TtssxContext))]
-    partial class TtssxContextModelSnapshot : ModelSnapshot
+    [Migration("20161126225802_Add-TramId-Column-FetchPassage")]
+    partial class AddTramIdColumnFetchPassage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -59,14 +60,8 @@ namespace TTSSXApi.Migrations
                     b.Property<TimeSpan?>("ActualTime")
                         .HasColumnName("ftpactual");
 
-                    b.Property<string>("Direction")
-                        .HasColumnName("ftpdirection");
-
                     b.Property<int>("FetchId")
                         .HasColumnName("ftpfetid");
-
-                    b.Property<string>("LineNo")
-                        .HasColumnName("ftpline");
 
                     b.Property<long>("PassageId")
                         .HasColumnName("ftppassageid");

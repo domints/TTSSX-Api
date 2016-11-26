@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TTSSXApi.Migrations
@@ -13,7 +14,7 @@ namespace TTSSXApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CompositionNo = table.Column<string>(nullable: true),
                     Line = table.Column<string>(nullable: true),
                     PlannedTime = table.Column<string>(nullable: true),

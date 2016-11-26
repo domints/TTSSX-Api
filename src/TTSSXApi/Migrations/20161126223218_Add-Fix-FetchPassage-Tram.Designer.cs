@@ -8,9 +8,10 @@ using TTSSXApi.Models.Db;
 namespace TTSSXApi.Migrations
 {
     [DbContext(typeof(TtssxContext))]
-    partial class TtssxContextModelSnapshot : ModelSnapshot
+    [Migration("20161126223218_Add-Fix-FetchPassage-Tram")]
+    partial class AddFixFetchPassageTram
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -59,14 +60,8 @@ namespace TTSSXApi.Migrations
                     b.Property<TimeSpan?>("ActualTime")
                         .HasColumnName("ftpactual");
 
-                    b.Property<string>("Direction")
-                        .HasColumnName("ftpdirection");
-
                     b.Property<int>("FetchId")
                         .HasColumnName("ftpfetid");
-
-                    b.Property<string>("LineNo")
-                        .HasColumnName("ftpline");
 
                     b.Property<long>("PassageId")
                         .HasColumnName("ftppassageid");
@@ -77,10 +72,7 @@ namespace TTSSXApi.Migrations
                     b.Property<int>("RelativeTime")
                         .HasColumnName("ftprelative");
 
-                    b.Property<string>("TheirTramId")
-                        .HasColumnName("ftptheirtraid");
-
-                    b.Property<int?>("TramId")
+                    b.Property<string>("TramId")
                         .HasColumnName("ftptraid");
 
                     b.Property<long>("TripId")
@@ -89,8 +81,6 @@ namespace TTSSXApi.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("FetchId");
-
-                    b.HasIndex("TramId");
 
                     b.ToTable("fetchpassages");
                 });
@@ -189,10 +179,6 @@ namespace TTSSXApi.Migrations
                         .WithMany("FetchPassages")
                         .HasForeignKey("FetchId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TTSSXApi.Models.Db.Tram", "Tram")
-                        .WithMany("FetchPassages")
-                        .HasForeignKey("TramId");
                 });
 
             modelBuilder.Entity("TTSSXApi.Models.Db.Tram", b =>

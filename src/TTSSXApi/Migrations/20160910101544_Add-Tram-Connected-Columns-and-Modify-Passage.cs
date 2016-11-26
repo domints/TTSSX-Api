@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TTSSXApi.Migrations
@@ -17,7 +18,7 @@ namespace TTSSXApi.Migrations
                 columns: table => new
                 {
                     depid = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     depname = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -30,7 +31,7 @@ namespace TTSSXApi.Migrations
                 columns: table => new
                 {
                     ttyid = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ttylowfloor = table.Column<int>(nullable: false),
                     ttyname = table.Column<string>(nullable: true)
                 },
@@ -44,7 +45,7 @@ namespace TTSSXApi.Migrations
                 columns: table => new
                 {
                     traid = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     tradepid = table.Column<int>(nullable: false),
                     trasideno = table.Column<string>(nullable: true),
                     tratheirid = table.Column<string>(nullable: true),
@@ -142,7 +143,7 @@ namespace TTSSXApi.Migrations
                 newName: "passages");
 
             migrationBuilder.Sql("INSERT INTO depos (depname) VALUES ('Zajezdnia Podgórze'), ('Zajezdnia Nowa Huta');");
-            migrationBuilder.Sql("INSERT INTO tramtypes (ttyname, ttylowfloor) VALUES ('105N/Na', 0), ('E1', 0), ('GT8S', 0), ('N8C/N8S', 0), ('405N-Kr', 1), ('EU8N', 1), ('NGT6', 2), ('NGT6-2', 2), ('NGT8', 2), ('2014N ''Krakowiak''', 2);");
+            migrationBuilder.Sql("INSERT INTO tramtypes (ttyname, ttylowfloor) VALUES ('105N/Na', 0), ('E1', 0), ('GT8S', 0), ('N8C/N8S', 0), ('405N-Kr', 1), ('EU8N', 1), ('NGT6', 2), ('NGT6-2', 2), ('NGT8', 2), ('2014N ''Krakowiak''', 2), ('105Nb', 0);");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

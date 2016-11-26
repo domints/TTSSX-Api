@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TTSSXApi.Models.Db
 {
@@ -25,5 +22,6 @@ namespace TTSSXApi.Models.Db
 
         public virtual Depo Depo { get; set; }
         public virtual TramType TramType { get; set; }
+	public virtual ICollection<FetchPassage> FetchPassages { get; set; }
     }
 }

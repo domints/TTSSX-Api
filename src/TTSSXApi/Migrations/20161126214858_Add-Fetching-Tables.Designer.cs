@@ -8,9 +8,10 @@ using TTSSXApi.Models.Db;
 namespace TTSSXApi.Migrations
 {
     [DbContext(typeof(TtssxContext))]
-    partial class TtssxContextModelSnapshot : ModelSnapshot
+    [Migration("20161126214858_Add-Fetching-Tables")]
+    partial class AddFetchingTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -59,14 +60,8 @@ namespace TTSSXApi.Migrations
                     b.Property<TimeSpan?>("ActualTime")
                         .HasColumnName("ftpactual");
 
-                    b.Property<string>("Direction")
-                        .HasColumnName("ftpdirection");
-
                     b.Property<int>("FetchId")
                         .HasColumnName("ftpfetid");
-
-                    b.Property<string>("LineNo")
-                        .HasColumnName("ftpline");
 
                     b.Property<long>("PassageId")
                         .HasColumnName("ftppassageid");
@@ -77,10 +72,7 @@ namespace TTSSXApi.Migrations
                     b.Property<int>("RelativeTime")
                         .HasColumnName("ftprelative");
 
-                    b.Property<string>("TheirTramId")
-                        .HasColumnName("ftptheirtraid");
-
-                    b.Property<int?>("TramId")
+                    b.Property<int>("TramId")
                         .HasColumnName("ftptraid");
 
                     b.Property<long>("TripId")
@@ -192,7 +184,8 @@ namespace TTSSXApi.Migrations
 
                     b.HasOne("TTSSXApi.Models.Db.Tram", "Tram")
                         .WithMany("FetchPassages")
-                        .HasForeignKey("TramId");
+                        .HasForeignKey("TramId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TTSSXApi.Models.Db.Tram", b =>
