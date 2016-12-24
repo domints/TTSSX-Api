@@ -52,10 +52,11 @@ catch(Exception ex)
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+		Console.WriteLine("Start configure");
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             log = loggerFactory.CreateLogger("error");
-
+Console.WriteLine("Got log factory");
             try
             {
                 app.UseMvc();
@@ -97,6 +98,7 @@ catch(Exception ex)
                       await context.Response.WriteAsync(ex.StackTrace).ConfigureAwait(false);
                   });
             }
+Console.WriteLine("Configured");
         }
     }
 }
