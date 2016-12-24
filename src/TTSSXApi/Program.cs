@@ -15,7 +15,15 @@ namespace TTSSXApi
         {
 #if !DEBUG
             string appPath = Directory.GetCurrentDirectory();
+	    string sAppPath = env.ContentRootPath;
+     string sRootPath = Path.GetFullPath(Path.Combine(sAppPath, @"..\..\"));
+     string sBinFolderPath = @"artifacts\bin\" + appenv.ApplicationName;
+     string sBinPath = Path.Combine(sRootPath, sBinFolderPath);
 Console.WriteLine("AppPath: " + appPath);
+Console.WriteLine("sAppPath: " + sAppPath);
+Console.WriteLine("sRootPath: " + aRootPath);
+Console.WriteLine("sBinFolderPath: " + sBinFolderPath);
+Console.WriteLine("sBinPath: " + sBinPath);
             if (!Directory.GetFiles(appPath).Any(file => file.ToLower().Contains("ttssxapi.dll")))
             {
                 appPath = Path.Combine(appPath, "root");
