@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace TTSSXApi.Models.Db
 {
     public class TtssxContext : DbContext
     {
         public TtssxContext(DbContextOptions<TtssxContext> options)
-            : base(options)
+        : base(options)
         { }
 
         public virtual DbSet<Passage> Passages { get; set; }

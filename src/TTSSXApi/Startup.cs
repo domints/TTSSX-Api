@@ -34,7 +34,6 @@ namespace TTSSXApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            try{
             // Add framework services.
             services.AddMvc();
 
@@ -42,21 +41,24 @@ namespace TTSSXApi
             services.AddDbContext<TtssxContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
-}
-catch(Exception ex)
-{
-	Console.WriteLine("[ERROR] " + ex.Message);
-}
+            try
+            {
+                var dboptions = new DbContextOptionsBuilder<TtssxContext>();
+                dboptions.UseNpgsql(connectionString);
+                TtssxContext cx = new TtssxContext(dboptions.Options);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"[ERROR] {ex.Message}\r\n{ex.StackTrace}");
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-		Console.WriteLine("Start configure");
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             log = loggerFactory.CreateLogger("error");
-Console.WriteLine("Got log factory");
             try
             {
                 app.UseMvc();
@@ -79,7 +81,7 @@ Console.WriteLine("Got log factory");
                               if (error != null)
                               {
                                   await context.Response.WriteAsync($"<h1>Error: {error.Error.Message}</h1>{error.Error.StackTrace}").ConfigureAwait(false);
-				Console.WriteLine($"[ERROR] {error.Error.Message}\r\n{error.Error.StackTrace}");
+                                Console.WriteLine($"[ERROR] {error.Error.Message}\r\n{error.Error.StackTrace}");
                               }
                           });
                     });
@@ -98,7 +100,6 @@ Console.WriteLine("Got log factory");
                       await context.Response.WriteAsync(ex.StackTrace).ConfigureAwait(false);
                   });
             }
-Console.WriteLine("Configured");
         }
     }
 }
