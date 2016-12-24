@@ -21,6 +21,7 @@ namespace TTSSXApi
 
         public Startup(IHostingEnvironment env)
         {
+            Console.WriteLine($"ContentRootPath: {env.ContentRootPath}");
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
