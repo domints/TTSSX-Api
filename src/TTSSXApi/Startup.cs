@@ -37,9 +37,9 @@ namespace TTSSXApi
             // Add framework services.
             services.AddMvc();
 
-            //var connectionString = Configuration["DbContextSettings:ConnectionString"];
+            var connectionString = Configuration["Data:Conn"];
             services.AddDbContext<TtssxContext>(
-                opts => opts.UseNpgsql("User ID = ttssx_user; Password = tt55x; Host = vps.dszymanski.pl; Port = 5432; Database = ttssx; Pooling = true;")
+                opts => opts.UseNpgsql(connectionString);
             );
         }
 
