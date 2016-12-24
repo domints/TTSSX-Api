@@ -33,6 +33,7 @@ namespace TTSSXApi
             var config = builder.Build();  
 
  }        
+Console.WriteLine("BOOTING ON PORT " + listenPort);
 #endif
 
             var host = new WebHostBuilder()
