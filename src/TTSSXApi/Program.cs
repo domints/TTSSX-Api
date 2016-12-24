@@ -15,6 +15,7 @@ namespace TTSSXApi
         {
 #if !DEBUG
             string appPath = Directory.GetCurrentDirectory();
+Console.WriteLine("AppPath: " + appPath);
             if (!Directory.GetFiles(appPath).Any(file => file.ToLower().Contains("ttssxapi.dll")))
             {
                 appPath = Path.Combine(appPath, "root");
