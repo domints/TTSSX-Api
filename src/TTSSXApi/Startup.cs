@@ -23,12 +23,9 @@ namespace TTSSXApi
         {
             var location = System.Reflection.Assembly.GetEntryAssembly().Location;
             var directory = System.IO.Path.GetDirectoryName(location);
-            System.Console.WriteLine($"location: {location} directory: {directory}");
-            Console.WriteLine($"WebRootPath: {env.WebRootPath}");
-            Console.WriteLine($"ContentRootPath: {env.ContentRootPath}");
-
+            env.ContentRootPath = directory;
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
+                .SetBasePath(directory)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
@@ -42,7 +39,6 @@ namespace TTSSXApi
         {
             // Add framework services.
             services.AddMvc();
-
             var connectionString = Configuration["Data:Conn"];
             Console.WriteLine("Configuration dump:");
             foreach(var kv in Configuration.AsEnumerable())
