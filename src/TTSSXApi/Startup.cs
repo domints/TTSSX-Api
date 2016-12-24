@@ -38,6 +38,11 @@ namespace TTSSXApi
             services.AddMvc();
 
             var connectionString = Configuration["Data:Conn"];
+            Console.WriteLine("Configuration dump:");
+            foreach(var kv in Configuration.AsEnumerable())
+            {
+                Console.WriteLine($"{kv.Key} : {kv.Value}");
+            }
             services.AddDbContext<TtssxContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
