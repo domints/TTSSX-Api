@@ -14,16 +14,14 @@ namespace TTSSXApi
         public static void Main(string[] args)
         {
 #if !DEBUG
+            string listenPort = string.Empty(); 
+            if(args.Length > 0)
+            {
+                listenPort = args[0];
+            }
+            else
+{
             string appPath = Directory.GetCurrentDirectory();
-	    string sAppPath = env.ContentRootPath;
-     string sRootPath = Path.GetFullPath(Path.Combine(sAppPath, @"..\..\"));
-     string sBinFolderPath = @"artifacts\bin\" + appenv.ApplicationName;
-     string sBinPath = Path.Combine(sRootPath, sBinFolderPath);
-Console.WriteLine("AppPath: " + appPath);
-Console.WriteLine("sAppPath: " + sAppPath);
-Console.WriteLine("sRootPath: " + aRootPath);
-Console.WriteLine("sBinFolderPath: " + sBinFolderPath);
-Console.WriteLine("sBinPath: " + sBinPath);
             if (!Directory.GetFiles(appPath).Any(file => file.ToLower().Contains("ttssxapi.dll")))
             {
                 appPath = Path.Combine(appPath, "root");
@@ -32,7 +30,9 @@ Console.WriteLine("sBinPath: " + sBinPath);
             var builder = new ConfigurationBuilder()
                     .SetBasePath(appPath)
                     .AddJsonFile("appsettings.production.json");
-            var config = builder.Build();            
+            var config = builder.Build();  
+
+ }        
 #endif
 
             var host = new WebHostBuilder()
@@ -43,7 +43,7 @@ Console.WriteLine("sBinPath: " + sBinPath);
 #endif
                 .UseStartup<Startup>()
 #if !DEBUG
-                .UseUrls("http://*:{0}", config["ListenPort"])
+                .UseUrls("http://*:{0}", listenPort)
 #endif
                 .Build();
 
