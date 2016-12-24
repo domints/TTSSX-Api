@@ -14,7 +14,7 @@ namespace TTSSXApi
         public static void Main(string[] args)
         {
 #if !DEBUG
-            string listenPort = string.Empty(); 
+            string listenPort = string.Empty; 
             if(args.Length > 0)
             {
                 listenPort = args[0];
