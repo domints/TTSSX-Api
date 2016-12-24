@@ -17,9 +17,7 @@ namespace TTSSXApi.Controllers
 
         public AppController(TtssxContext _context)
         {
-		Console.WriteLine("booting context");
             cx = _context;
-Console.WriteLine("Got context");
         }
 
         // POST api/app
@@ -56,7 +54,6 @@ Console.WriteLine("Got context");
         [Route("trams")]
         public TramGetRs GetTrams([FromBody]TramGet tramids)
         {
-Console.WriteLine("Whoa, got request");
             try
             {
                 TramGetRs result = new TramGetRs();

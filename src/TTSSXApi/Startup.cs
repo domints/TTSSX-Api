@@ -40,24 +40,9 @@ namespace TTSSXApi
             // Add framework services.
             services.AddMvc();
             var connectionString = Configuration["Data:Conn"];
-            Console.WriteLine("Configuration dump:");
-            foreach(var kv in Configuration.AsEnumerable())
-            {
-                Console.WriteLine($"{kv.Key} : {kv.Value}");
-            }
             services.AddDbContext<TtssxContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
-            try
-            {
-                var dboptions = new DbContextOptionsBuilder<TtssxContext>();
-                dboptions.UseNpgsql(connectionString);
-                TtssxContext cx = new TtssxContext(dboptions.Options);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"[ERROR] {ex.Message}\r\n{ex.StackTrace}");
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
