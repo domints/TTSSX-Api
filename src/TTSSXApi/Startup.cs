@@ -34,6 +34,7 @@ namespace TTSSXApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            try{
             // Add framework services.
             services.AddMvc();
 
@@ -41,6 +42,11 @@ namespace TTSSXApi
             services.AddDbContext<TtssxContext>(
                 opts => opts.UseNpgsql(connectionString)
             );
+}
+catch(Exception ex)
+{
+	Console.WriteLine("[ERROR] " + ex.Message);
+}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +78,7 @@ namespace TTSSXApi
                               if (error != null)
                               {
                                   await context.Response.WriteAsync($"<h1>Error: {error.Error.Message}</h1>{error.Error.StackTrace}").ConfigureAwait(false);
+				Console.WriteLine($"[ERROR] {error.Error.Message}\r\n{error.Error.StackTrace}");
                               }
                           });
                     });
@@ -80,6 +87,7 @@ namespace TTSSXApi
             catch (Exception ex)
             {
                 log.LogError(ex.Message);
+                Console.WriteLine($"[ERROR] {ex.Message}\r\n{ex.StackTrace}");
                 app.Run(
                   async context =>
                   {
