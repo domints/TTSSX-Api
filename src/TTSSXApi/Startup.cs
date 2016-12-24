@@ -39,7 +39,7 @@ namespace TTSSXApi
 
             var connectionString = Configuration["Data:Conn"];
             services.AddDbContext<TtssxContext>(
-                opts => opts.UseNpgsql(connectionString);
+                opts => opts.UseNpgsql(connectionString)
             );
         }
 
