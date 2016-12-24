@@ -44,7 +44,7 @@ Console.WriteLine("BOOTING ON PORT " + listenPort);
 #endif
                 .UseStartup<Startup>()
 #if !DEBUG
-                .UseUrls("http://*:{0}", listenPort)
+                .UseUrls(string.Format("http://*:{0}", listenPort))
 #endif
                 .Build();
 
