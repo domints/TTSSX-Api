@@ -64,7 +64,7 @@ namespace TTSSXApi.Controllers
                     return null;
                 }
 
-                /*result.Items = cx.Trams.Include(t => t.TramType).Where(t => tramids.Trams.Contains(t.TheirId)).Select(t =>
+                result.Items = cx.Trams.Include(t => t.TramType).Where(t => tramids.Trams.Contains(t.TheirId)).Select(t =>
                     new TramGetItem
                         {
                             TramId = t.TheirId,
@@ -73,25 +73,8 @@ namespace TTSSXApi.Controllers
                             LowFloor = t.TramType.LowFloor,
                             ExtraInfo = t.ExtraInfo
                         }
-                ).ToArray();*/
-                foreach (string id in tramids.Trams)
-                {
-                    Tram tr = cx.Trams.Include(t => t.TramType).FirstOrDefault(t => t.TheirId == id.Trim());
-                    if (tr != null)
-                    {
-                        items.Add(new TramGetItem
-                        {
-                            TramId = id,
-                            TramNo = tr.SideNo,
-                            Name = tr.TramType.Name,
-                            LowFloor = tr.TramType.LowFloor,
-                            ExtraInfo = tr.ExtraInfo
-                        });
-                    }
-                }
-
-                result.Items = items.ToArray();
-
+                ).ToArray();
+                
                 return result;
             }
             catch(Exception ex)
