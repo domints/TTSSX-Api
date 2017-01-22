@@ -63,8 +63,18 @@ namespace TTSSXApi.Controllers
                     Console.WriteLine("GetTrams(TramGet): tramids is null. Refusing reply.");
                     return null;
                 }
-                
-                foreach (string id in tramids.Trams)
+
+                result.Items = cx.Trams.Include(t => t.TramType).Where(t => tramids.Trams.Any(tid => tid == t.TheirId)).Select(t =>
+                    new TramGetItem
+                        {
+                            TramId = t.TheirId,
+                            TramNo = t.SideNo,
+                            Name = t.TramType.Name,
+                            LowFloor = t.TramType.LowFloor,
+                            ExtraInfo = t.ExtraInfo
+                        }
+                ).ToArray();
+                /*foreach (string id in tramids.Trams)
                 {
                     Tram tr = cx.Trams.Include(t => t.TramType).FirstOrDefault(t => t.TheirId == id.Trim());
                     if (tr != null)
@@ -80,7 +90,7 @@ namespace TTSSXApi.Controllers
                     }
                 }
 
-                result.Items = items.ToArray();
+                result.Items = items.ToArray();*/
 
                 return result;
             }
