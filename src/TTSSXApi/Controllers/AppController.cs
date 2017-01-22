@@ -113,5 +113,12 @@ namespace TTSSXApi.Controllers
                 return null;
             }
         }
+
+        [HttpGet]
+        [Route("status")]
+        public string GetStatus()
+        {
+            return $"App: OK <br />\r\nDB: {(cx.Trams.Any() ? "OK" : "ERR")} <br />\r\nTrams: {cx.Trams.Count()}";
+        }
     }
 }
