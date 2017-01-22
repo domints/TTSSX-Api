@@ -64,7 +64,7 @@ namespace TTSSXApi.Controllers
                     return null;
                 }
 
-                result.Items = cx.Trams.Include(t => t.TramType).Where(t => tramids.Trams.Any(tid => tid == t.TheirId)).Select(t =>
+                result.Items = cx.Trams.Include(t => t.TramType).Where(t => tramids.Trams.Contains(t.TheirId)).Select(t =>
                     new TramGetItem
                         {
                             TramId = t.TheirId,
