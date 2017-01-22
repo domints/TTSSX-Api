@@ -58,6 +58,12 @@ namespace TTSSXApi.Controllers
             {
                 TramGetRs result = new TramGetRs();
                 List<TramGetItem> items = new List<Models.Response.TramGetItem>();
+                if(tramids == null)
+                {
+                    Console.WriteLine("GetTrams(TramGet): tramids is null. Refusing reply.");
+                    return null;
+                }
+                
                 foreach (string id in tramids.Trams)
                 {
                     Tram tr = cx.Trams.Include(t => t.TramType).FirstOrDefault(t => t.TheirId == id.Trim());
